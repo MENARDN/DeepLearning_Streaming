@@ -109,27 +109,14 @@
               Ci-dessous un exemple d'utilisation d'un réseau de super-résolution transformant l'image source (d) en une image de résolution supérieure (c) ou (b), respectivement sans et avec overfitting.
             </p>
             <img class="image center max-width-700 add-top-margin-small" src="img/superresolution.png">
-          </div>
-        </div>
-        <div class="flex-row-space-between">
-          <div class="flex-item flex-column">
-            <img class="image max-width-400" src="img/dummay-img.png">
-            <p class="image-caption">Image Caption</p>
-          </div>
-          <div class="flex-item flex-column">
-            <a href="https://github.com/yenchiah/project-website-template" target="_blank" class="image max-width-400">
-              <img src="img/dummay-img.png">
-            </a>
-            <p class="image-caption">Image Button Caption</p>
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-column">
+            <h3>Réseau de neurones 'scalable'</h3>
             <p class="text">
-              Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica,
-              sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e
-              li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar
-              custosi traductores. At solmen va esser.
+              L'environnement de visionnage d'une vidéo est très hétérogène parmis les clients, ce qui est également le cas de la puissance de calcul disponible.
+              L'inférence de l'image de haute-résolution doit se faire plus rapidement que la fréquence d'image de la vidéo (30/60Hz habituellement).
+              Si la solution n'utilisait qu'un réseau fixe par vidéo, la puissance de calcul requise serais fixe également, ce qui soit sous-utilise les ressources disponibles, soit ne satisfait pas la contrainte d'inférence en temps réel.
+            </p>
+            <p class="text">
+              C'est pourquoi le réseau doit s'adapter à la puissance de calcul disponible grâce à une structure 'scalable': le réseau est entrainé de telle manière qu'il fonctionne même certaines couches manquantes ('by-passed'). On peut ainsi à la fois créer un réseau plus simple (et ainsi plus rapide) pour des système à puissance de calcul limité, et également commencer à utiliser le réseau même si l'intégralité des poids n'ont pas été téléchargés (le réseau peut continuer d'être télécharger pendant la lecture de la vidéo).
             </p>
           </div>
         </div>
