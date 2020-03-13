@@ -144,7 +144,16 @@
               <li>Une fois l'inférence du segment vidéo terminé, le nouveau segment remplace l'ancien dans le buffer</li>
             </ul>
             <img class="image center max-width-700 add-top-margin-small" src="img/exemple.png">
-
+            <h3>Adaptation à un contexte de Live streaming</h3>
+            <p class="text">
+              Cette méthode d'amélioration de la QoE nécessite d'entraîner le réseau au préalable sur la vidéo, chose impossible dans le contexte du Live streaming.
+              Même s'il est toujours possible d'utiliser un réseau général de super-résolution dans ce cas, une solution plus intélligente et adaptée au Live streaming est possible:
+            </p>
+            <p class="text">
+              Dans la plupart des utilisations de Live-streaming, la diffusion est catégorisée selon son contenu (le jeu vidéo diffusé par exemple).
+              Il est donc possible d'entraîner un réseau "Content-aware" sur le sujet de la diffusion en direct.
+              Cependant les performances seront moins intéressantes que dans le cas des VoDs.
+            </p>
           </div>
         </div>
         <!--End Text with Images and Image buttons-->
