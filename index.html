@@ -233,18 +233,40 @@
             </p>
             <div class="flex-row-space-between">
               <div class="flex-item flex-column">
-                <img src="img/LUL.gif">
+                <img src="img/LUL.gif" width="250">
                 <p class="image-caption">Le chat lors d'un évènement drôle</p>
               </div>
               <div class="flex-item flex-column">
-                <img class="image max-width-400" src="img/Poggers.gif">
+                <img src="img/Poggers.gif" width="250">
                 <p class="image-caption">Le chat lors d'un évènement impressionant (= temps fort potentiel)</p>
               </div>
             </div>
             <h3>Méthode développée</h3>
-
-
-
+            <p class="text">
+              Le but de la méthode est donc d'entraîner un réseau à reconnaître des actions remarquables dans une vidéo d'un jeu vidéo en particulier (il semble difficile et peu efficace de créer un réseau capable de reconnaître ce genre d'actions dans un jeu quelconque). Le jeu choisi pour cette expérience a été 'Overwatch', jeu multijoueur en équipe à la première personne.
+            </p>
+            <p class="text">
+              Les données pour l'apprentissage ont été générées à partir de VoD disponibles sur Twitch de streameurs bon au jeu sélectionnés (afin d'avoir une bonne densité d'actions remarquebles), ainsi que suffisamment populaire pour avoir assez de messages dans le chat.
+            </p>
+            <p class="text">
+              En se basant sur la densité d'émoticones exprimant l'excitement, des segments vidéos de 30s ont été extraits, puis découpés en 30 segments de 1s.
+            </p>
+            <p class="text">
+              Chaqu'un de ces segments ont été ensuite évalués sur une échelle de 0 à 9, ainsi que labelisés spécialement "s" ou "i" (respectivement pour "skip" et "interrupted") dans le cas où le segment ne représente pas une action dans le jeu. Cette évaluation de 0 à 9 a été faite à la main afin de juger de manière plus précise le segment vidéo (le personnage ne fesant que marcher par exemple aurait un score faible, une action impressionante aurait un score fort)
+            </p>
+            <p class="text">
+              Chaque segment de 1s a été, pour cause de simplicité de modèle, séparé en 3 images fixes, ayant chaqu'un le label du segment vidéo (dans le cas d'une vidée à 30Hz, la 10eme, 20eme et 30eme image sont récupérées). La base de donnée obtenue avait environ 40,000 échantillons.
+            </p>
+            <p class="text">
+              Une fois les données obtenues, l'apprentissage s'est fait avec le modèle InceptionResNetV2 de Google.
+            </p>
+            <p class="text">
+              Ci-dessous une vidéo montrant les résultats de l'apprentissage une fois fourni d'une nouvelle vidéo du jeu 'Overwatch' (les actions récupérées sont effectivement des actions remarquable dans le contexte du jeu).
+            </p>
+            <video preload controls muted playsinline class="image">
+              <source src="vid/Pogchamp.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
         <!--End Credits-->
