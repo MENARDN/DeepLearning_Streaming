@@ -33,6 +33,7 @@
         </a>
         <div class="menu-items flex-row-center flex-item">
           <a href="index.html" class="menu-index">Overview</a>
+          <a href="https://www.diigo.com/profile/nmenard" class="menu-index">Library Diigo</a>
         </div>
       </div>
     </div>
@@ -56,7 +57,7 @@
             <p class="text text-center graph-title">
               Nombre d’heures de vidéos uploadées par minute sur Youtube (2007-2019)
             </p>
-            <img class="image center max-width-400 add-top-margin-small" src="img/Hours.PNG">
+            <img class="image center max-width-700 add-top-margin-small" src="img/Hours.PNG">
             <h3>Pourquoi utiliser le Deep Learning?</h3>
             <p class="text">
               Le Deep Learning est l'utilisation de méthodes d'apprentissage automatique comme les réseaux de neurones profonds afin de tenter d'apprendre à un niveau d'abstraction élevé des données
@@ -169,176 +170,47 @@
             <p class="text">
               Cependant, cette estimation est complexe et chronophage, ce qui empêche toute mesure précise de la QoE en temps réel. Le but ici est d'utiliser le deep learning non supervisé afin d'obtenir une solution rapide et polyvalente à différents types de vidéo.
             </p>
-            <h3>Machine de Boltzmann Restreinte (RMB) et apprentissage non-supervisé</h3>
+            <h3>Machine de Boltzmann Restreinte (RBM) et apprentissage non-supervisé</h3>
             <p class="text">
-              Dans un premier temps,
+              L'apprentissage non-supervisé permet d'inférer une structure dans des données non labélisées.
+              Une Machine de Boltzmann restreinte est un type de réseau d'apprentissage non-supervisé, adapté à l'estimation de densité et permet d'apprendre la distribution de probabilité de ses inputs.
+            </p>
+            <p class="text">
+              L'apprentissage a pour objectif ici de minimiser l'erreur entre les inputs et les inputs reconstruits.
+            </p>
+            <p class="text">
+              Ainsi, quand le réseau rencontre des inputs ne faisant pas partie de la distribution apprise lors de la phase d'apprentissage, l'erreur entre les iputs et les inputs reconstruits augmente.
+            </p>
+            <p class="text">
+              La dégradation de la vidéo peut donc être estimée par l'erreur entre les inputs de la vidéo coté client et ces mêmes inputs reconstruits à partir du réseau entrainé sur la vidéo originale.
             </p>
             <h3>Principe de la méthode</h3>
             <p class="text">
-              Dans un premier temps,
+              Les inputs associés à une séquence vidéos sont des features corrélées à la QoE:
             </p>
+            <ul>
+              <li>Le bitrate</li>
+              <li>Le nombre de frames reçues</li>
+              <li>La complexité de la scène ainsi que le mouvement, empiriquement extrait de l'encodage</li>
+              <li>La pixelisation</li>
+              <li>Le ratio de bruit</li>
+              <li>Le flou moyen</li>
+              <li>L'intensité du mouvement (au niveau du pixel)</li>
+            </ul>
             <p class="text">
-              Cependant, cette estimation est complexe et chronophage, ce qui empêche toute mesure précise de la QoE en temps réel. Le but ici est d'utiliser le deep learning non supervisé afin d'obtenir une solution rapide et polyvalente à différents types de vidéo.
+              Ces features ont été choisies car elles sont récupérables en temps réel et présentent une corrélation élevée avec la qualité de la vidéo.
             </p>
-          </div>
-        </div>
-        <!--End Text with Images and Image buttons-->
-        <!-------------------------------------------------------------------------------------------->
-        <!--Start Text with Images and Videos-->
-        <div class="flex-row">
-          <div class="flex-item flex-column">
-            <h2 class="add-top-margin">Text with Images and Videos</h2>
-            <hr>
+            <h4>La méthode fonctionne donc de la manière suivante:</h4>
+            <ul>
+              <li>Le modèle RBM est entrainé avec les vidéos disponibles sur la plateforme</li>
+              <li>Quand le client ouvre une session, il télécharge le modèle</li>
+              <li>Une fois que le streaming commence, le client extrait en direct les 8 features mentionnées précedemment</li>
+              <li>Quand la séquence vidéo (2-10 secondes) est terminée, ces features sont moyennées, insérées dans le modèle RMB, et ainsi reconstruites</li>
+              <li>L'erreur RMSE entre les features et leur versions reconstruites donne une estimation de la dégradation de la vidéo</li>
+            </ul>
+            <img class="image center max-width-700 add-top-margin-small" src="img/QoE.PNG">
             <p class="text">
-              Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del
-              coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.
-              It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un
-              simplificat Angles, quam un skeptic Cambridge amico dit me.
-            </p>
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-item-stretch flex-column">
-            <img class="image" src="img/dummay-img.png">
-          </div>
-          <div class="flex-item flex-item-stretch flex-column">
-            <p class="text">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-              aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-              dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-              sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
-              magnam aliquam quaerat voluptatem. Sed ut perspiciatis unde.
-            </p>
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-item-stretch flex-column">
-            <video preload controls autoplay loop muted playsinline class="image">
-              <source src="vid/mov_bbb.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="flex-item flex-item-stretch flex-column">
-            <p class="text">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-              aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-              dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-              sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore
-              magnam.
-            </p>
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-column">
-            <p class="text">
-              Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del
-              coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues.
-              It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un
-              simplificat Angles, quam un skeptic Cambridge amico dit me.
-            </p>
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-item-stretch-2 flex-column">
-            <p class="text">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-              aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-              dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-              sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.
-            </p>
-          </div>
-          <div class="flex-item flex-item-stretch flex-column">
-            <img class="image" src="img/dummay-img.png">
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-item-stretch-2 flex-column">
-            <p class="text">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-              aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-              dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-              sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.
-            </p>
-          </div>
-          <div class="flex-item flex-item-stretch flex-column">
-            <video preload controls autoplay loop muted playsinline class="image">
-              <source src="vid/mov_bbb.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-item-stretch flex-column">
-            <p class="text">
-              Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica,
-              sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e
-              li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar
-              custosi traductores. At solmen va esser.
-            </p>
-          </div>
-        </div>
-        <!--End Text with Images and Videos-->
-        <!-------------------------------------------------------------------------------------------->
-        <!--Start Text with Gallery-->
-        <div class="flex-row">
-          <div class="flex-item flex-column">
-            <h2 class="add-top-margin">Text with Gallery (Responsive Size)</h2>
-            <hr>
-            <p class="text">
-              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel
-              augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget
-              condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit
-              vel, luctus pulvinar, hendrerit id, lorem.
-            </p>
-          </div>
-        </div>
-        <div class="gallery">
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-          <a href="javascript:void(0)" class="flex-column"><img src="img/dummay-img.png">
-            <div>Image Caption</div>
-          </a>
-        </div>
-        <div class="flex-row">
-          <div class="flex-item flex-column">
-            <p class="text">
-              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel
-              augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget
-              condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit
-              vel, luctus pulvinar, hendrerit id, lorem.
-            </p>
-          </div>
-        </div>
-        <!--End Text with Gallery-->
-        <!-------------------------------------------------------------------------------------------->
-        <!--Start Credits-->
-        <div class="flex-row">
-          <div class="flex-item flex-item-stretch flex-column">
-            <p class="text text-small text-italic">
-              Credits: <span class="highlight-text">Organization One</span>: Author One and Author Two / <span class="highlight-text">Organization Two</span>: Author Three and Author Four
+              Cette méthode donne une corrélation entre 78 et 91% avec la méthode VQM (Video Quality Metric), qui est une métrique adaptée à la vision humaine.
             </p>
           </div>
         </div>
