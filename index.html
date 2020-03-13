@@ -118,6 +118,33 @@
             <p class="text">
               C'est pourquoi le réseau doit s'adapter à la puissance de calcul disponible grâce à une structure 'scalable': le réseau est entrainé de telle manière qu'il fonctionne même certaines couches manquantes ('by-passed'). On peut ainsi à la fois créer un réseau plus simple (et ainsi plus rapide) pour des système à puissance de calcul limité, et également commencer à utiliser le réseau même si l'intégralité des poids n'ont pas été téléchargés (le réseau peut continuer d'être télécharger pendant la lecture de la vidéo).
             </p>
+            <img class="image center max-width-700 add-top-margin-small" src="img/architecture.png">
+            <h3>Implémentation en conjonction avec l'ABR</h3>
+            <p class="text">
+              L'Adaptative Bitrate est une technique visant à adapter le bitrate (résolution) de la vidéo en fonction de la bande passante disponible dans le but d'éviter du buffering tout en ayant la qualité la plus grande possible.
+              Cette technique est souvent implémentée par un algorithme d'apprentissage par renforcement (comme par exemple sur Youtube).
+              Pour notre solution, l'algorithme d'apprentissage par renforcement doit maintenant gérer le téléchargement des poids du réseau en plus du choix du bitrate du prochain segment vidéo à télécharger.
+            </p>
+            <h3>Structure de la solution</h3>
+            <p class="text">
+              Le fonctionnement de la solution peut être synthétisé comme suit:
+            </p>
+            <h4>Lorsqu'une vidéo est uploadée sur la plateforme</h4>
+            <ul>
+              <li>La vidéo est encodée dans plusieurs bitrates et séparée en différents 'chunks' (comportement basique)</li>
+              <li>Plusieurs réseaux profonds 'content-aware' sont entraînés pour la vidéo pour l'amélioration coté client (les poids initiaux correspondent déjà à un état entraîné général pour facilité l'apprentissage)</li>
+              <li>Un fichier manifeste pour la vidéo est créé, détaillant la structure des réseaux entraînés et l'adresse des fichier de poids de chaque réseaux</li>
+            </ul>
+            <h4>Lors de la lecture d'une vidéo</h4>
+            <ul>
+              <li>Le fichier manifeste est téléchargé</li>
+              <li>Le client détermine le réseau adapté à sa puissance de calcul (test à partir de poids nuls pour tester le temps d'inférence)</li>
+              <li>L'ABR décide ensuite à chaque étape si des couches de réseaux sont téléchargés, ou des segments vidéo (dépends de la bande passante, de la taille du buffer etc...)</li>
+              <li>Quand un segment vidéo est téléchargé, il est placé dans le buffer et est passé dans le réseau de super-résolution et utilise le nombre maximum de couche permettent une inférence en temps réel</li>
+              <li>Une fois l'inférence du segment vidéo terminé, le nouveau segment remplace l'ancien dans le buffer</li>
+            </ul>
+            <img class="image center max-width-700 add-top-margin-small" src="img/exemple.png">
+
           </div>
         </div>
         <!--End Text with Images and Image buttons-->
